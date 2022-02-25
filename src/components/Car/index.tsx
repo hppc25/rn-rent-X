@@ -15,7 +15,7 @@ import {
   Price,
   Type,
   CarImage
-} from './style';
+} from './styles';
 
 interface CarData{
     brand: string,
