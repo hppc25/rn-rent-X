@@ -17,6 +17,7 @@ import { Home } from './src/screens/Home';
 import { ThemeProvider } from 'styled-components';
 import { CarDetails } from './src/screens/CarDetail';
 import { Scheduling } from './src/screens/Scheduling';
+import { SchedulingDetails } from './src/screens/SchedulingDetails';
 import { Confirmation } from './src/screens/Confirmation';
 
 export default function App() {
@@ -33,7 +34,7 @@ export default function App() {
   }
   return (
     <ThemeProvider theme={theme}>
-      <Confirmation />
+      <SchedulingDetails />
     </ThemeProvider>
   )
 }
