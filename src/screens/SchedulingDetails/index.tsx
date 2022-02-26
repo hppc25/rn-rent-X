@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
+import { useNavigation } from '@react-navigation/native';
 
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
@@ -44,8 +45,10 @@ interface RentalPeriod {
 export function SchedulingDetails(){
   const theme = useTheme();
 
+  const navigation = useNavigation()
 
   function handleConfirmation() {
+    navigation.navigate('Confirmation' as never)
   }
 
   return (

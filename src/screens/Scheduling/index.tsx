@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { StatusBar } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { useTheme } from 'styled-components';
 
@@ -24,6 +25,11 @@ export function Scheduling(){
 
   function handleChangeDate(date: DayProps) {
 
+  }
+  const navigation = useNavigation()
+
+  function handleSchedulingDetails() {
+    navigation.navigate('SchedulingDetails' as never)
   }
   return (
     <Container >
@@ -70,6 +76,7 @@ export function Scheduling(){
       <Footer>
         <Button 
           title="Confirmar"
+          onPress={handleSchedulingDetails}
         />
       </Footer>
     </Container>

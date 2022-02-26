@@ -12,6 +12,7 @@ import {
 } from '@expo-google-fonts/archivo';
 import AppLoading from 'expo-app-loading';
 import theme from './src/styles/theme';
+import { Routes } from './src/routes';
 
 import { Home } from './src/screens/Home';
 import { ThemeProvider } from 'styled-components';
@@ -34,7 +35,7 @@ export default function App() {
   }
   return (
     <ThemeProvider theme={theme}>
-      <SchedulingDetails />
+        <Routes />
     </ThemeProvider>
   )
 }
