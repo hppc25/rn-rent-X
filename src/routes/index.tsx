@@ -5,7 +5,8 @@ import { StackRoutes } from './stack.routes';
 import { CarDTO } from '../dtos/CarDTO';
 
 export type RootStackParamList = {
-  Home: {car: CarDTO};
+  Splash: undefined;
+  Home: undefined;
   CarDetails: {car: CarDTO};
   Scheduling: {car: CarDTO};
   SchedulingDetails: {} | undefined;
