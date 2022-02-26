@@ -8,7 +8,7 @@ export type RootStackParamList = {
   Home: {car: CarDTO};
   CarDetails: {car: CarDTO};
   Scheduling: {car: CarDTO};
-  SchedulingDetails: {car: CarDTO};
+  SchedulingDetails: {} | undefined;
   Confirmation: undefined;
 };
 
