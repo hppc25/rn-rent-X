@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, StatusBar, Keyboard } from 'react-native';
+import { KeyboardAvoidingView, StatusBar, Keyboard, Alert, Platform } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import * as Yup from 'yup';
 import { useTheme } from 'styled-components';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
@@ -13,8 +14,35 @@ export function SignIn(){
 
   const theme = useTheme()
 
+  async function handleSignIn() {
+    try {
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .required('E-mail obrigatório')
+          .email('Digite um e-mail válido'),
+        password: Yup.string()
+          .required('A palavra-passe é obrigatória')
+      });
+      await schema.validate({ email, password });
+      Alert.alert('Tudo certo')
+      //todo - login
+
+    } catch (error) {
+      if(error instanceof Yup.ValidationError) {
+        Alert.alert('Opa', error.message)
+      } else {
+        Alert.alert(
+          'Erro na autenticação',
+          'Ocorreu um erro ao fazer login, verifique as credenciais'
+        )
+      }
+    }
+  }
   return (
-    <KeyboardAvoidingView behavior='position' enabled>
+    <KeyboardAvoidingView 
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={{ flex: 1, backgroundColor: theme.colors.shape }}
+    >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
         <Container>
@@ -44,7 +72,7 @@ export function SignIn(){
 
             <PasswordInput 
               iconName="lock"
-              placeholder="Password"
+              placeholder="Palavra-passe"
               onChangeText={setPassword}
               value={password}
             />
@@ -53,7 +81,7 @@ export function SignIn(){
           <Footer>
             <Button 
               title="Login"
-              onPress={() => {}}
+              onPress={handleSignIn}
               enabled
               loading={false}
             />
