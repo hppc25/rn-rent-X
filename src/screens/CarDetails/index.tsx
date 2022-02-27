@@ -98,15 +98,15 @@ export function CarDetails({ navigation, route:{params: {car}}}: NextScreenProps
   };
 
 
-  const [photos, setPhotos] = useState<ImgProps[]>([]);
+  // const [photos, setPhotos] = useState<ImgProps[]>([]);
   
-  useEffect(() => {
-    let list:ImgProps[] = new Array();
+  // useEffect(() => {
+  //   let list:ImgProps[] = new Array();
 
-    car.photos.map( item=> list.push({'id': item, 'photo': item}))
-    setPhotos([...list])
+  //   // car.photos.map( item=> list.push({'id': item, 'photo': item}))
+  //   setPhotos([...list])
     
-  },[])
+  // },[])
 
 
   return (
@@ -131,7 +131,7 @@ export function CarDetails({ navigation, route:{params: {car}}}: NextScreenProps
         <Animated.View style={sliderCarsStyleAnimation}>
           <CarImages>
             <ImageSlider 
-              imagesUrl={photos}
+              imagesUrl={car.photos}
             />
           </CarImages>
         </Animated.View>
@@ -153,8 +153,8 @@ export function CarDetails({ navigation, route:{params: {car}}}: NextScreenProps
           </Description>
 
           <Rent>
-            <Period>{car.rent.period}</Period>
-            <Price>{car.rent.price}£</Price>
+            <Period>{car.period}</Period>
+            <Price>{car.price}£</Price>
           </Rent>
         </Details>
 

@@ -84,7 +84,7 @@ export function SchedulingDetails({ navigation, route }: NextScreenProps){
   const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>({} as RentalPeriod)
   const theme = useTheme();
   const { car, dates } = route.params as Params
-  const totalRent = Number(dates.length * car.rent.price);
+  const totalRent = Number(dates.length * car.price);
 
   async function handleConfirmation() {
     const schedulesByCar = await api.get(`/schedules_bycars/${car.id}`);
@@ -130,15 +130,15 @@ export function SchedulingDetails({ navigation, route }: NextScreenProps){
 
   },[]);
 
-  const [photos, setPhotos] = useState<ImgProps[]>([]);
+  // const [photos, setPhotos] = useState<ImgProps[]>([]);
   
-  useEffect(() => {
-    let list:ImgProps[] = new Array();
+  // useEffect(() => {
+  //   let list:ImgProps[] = new Array();
 
-    car.photos.map( item=> list.push({'id': item, 'photo': item}))
-    setPhotos([...list])
+  //   car.photos.map( item=> list.push({'id': item, 'photo': item}))
+  //   setPhotos([...list])
     
-  },[]);
+  // },[]);
 
   return (
     <Container >
@@ -148,7 +148,7 @@ export function SchedulingDetails({ navigation, route }: NextScreenProps){
 
       <CarImages>
         <ImageSlider 
-          imagesUrl={photos}
+          imagesUrl={car.photos}
         />
       </CarImages>
       
@@ -160,8 +160,8 @@ export function SchedulingDetails({ navigation, route }: NextScreenProps){
           </Description>
 
           <Rent>
-            <Period>{car.rent.period}</Period>
-            <Price>{`R$ ${car.rent.price}`}</Price>
+            <Period>{car.period}</Period>
+            <Price>{`R$ ${car.price}`}</Price>
           </Rent>
         </Details>
 
@@ -207,7 +207,7 @@ export function SchedulingDetails({ navigation, route }: NextScreenProps){
         <RentalPrice>
           <RentalPriceLabel>TOTAL</RentalPriceLabel>
           <RentalPriceDetails>
-            <RentalPriceQuota>{`£ ${car.rent.price} x${dates.length} diárias`}</RentalPriceQuota>
+            <RentalPriceQuota>{`£ ${car.price} x${dates.length} diárias`}</RentalPriceQuota>
             <RentalPriceTotal>{`£ ${totalRent}`}</RentalPriceTotal>
           </RentalPriceDetails>
         </RentalPrice>

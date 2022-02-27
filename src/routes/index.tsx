@@ -1,7 +1,9 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { StackRoutes } from './stack.routes';
 
+import { useAuth } from '../hooks/auth';
+import { AppTabRoutes } from './app.tab.routes';
+import { AuthRoutes } from './auth.routes';
 import { CarDTO } from '../dtos/CarDTO';
 
 export type RootStackParamList = {
@@ -13,14 +15,18 @@ export type RootStackParamList = {
   CarDetails: {car: CarDTO};
   Scheduling: {car: CarDTO};
   SchedulingDetails: {} | undefined;
-  Confirmation: {} | undefined;
+  Confirmation:{} | undefined;
   MyCars: undefined;
 };
 
+
+
 export function Routes(){
+  const { user } = useAuth();
+
   return (
     <NavigationContainer>
-      <StackRoutes />
+      { user.id ? <AppTabRoutes /> : <AuthRoutes /> }
     </NavigationContainer>
-  )
+  );
 }
