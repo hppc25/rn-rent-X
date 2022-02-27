@@ -24,6 +24,8 @@ import {
 } from './styles';
 import { RootStackParamList } from '../../../routes';
 import { StackNavigationProp } from '@react-navigation/stack';
+import api from '../../../services/api';
+
 
 type NextScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -69,11 +71,22 @@ export function SignUpSecondStep({ navigation, route }: NextScreenProps){
       return Alert.alert('As palavra-passes não são iguais');
     }
 
-    navigation.navigate('Confirmation', {
-        nextScreenRoute: 'SignIn',
-        title: 'Conta criada!',
-        message: `Agora é só fazer o login\n e aproveitar.`
+    await api.post('/users', {
+        name: user.name,
+        email: user.email,
+        driver_license: user.driverLicense,
+        password
       })
+      .then(() => {
+        navigation.navigate('Confirmation', {
+          nextScreenRoute: 'SignIn',
+          title: 'Conta criada!',
+          message: `Agora é só fazer o login\n e aproveitar.`
+        })
+      })
+      .catch(() => {
+        Alert.alert('Opa', 'Não foi possível registar');
+      });
 
   }
 
