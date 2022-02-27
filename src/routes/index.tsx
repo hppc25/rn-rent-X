@@ -5,12 +5,15 @@ import { StackRoutes } from './stack.routes';
 import { CarDTO } from '../dtos/CarDTO';
 
 export type RootStackParamList = {
+  SignUpFirstStep: {} | undefined;
+  SignUpSecondStep: {} | undefined;
+  SignIn: {} | undefined;
   Splash: undefined;
-  Home: undefined;
+  Home: {} | undefined;
   CarDetails: {car: CarDTO};
   Scheduling: {car: CarDTO};
   SchedulingDetails: {} | undefined;
-  Confirmation: undefined;
+  Confirmation: {} | undefined;
   MyCars: undefined;
 };
 
