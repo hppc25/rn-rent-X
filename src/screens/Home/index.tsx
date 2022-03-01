@@ -30,18 +30,27 @@ export function Home() {
 
 
   useEffect(() => {
+    let isMounted = true;
+
     async function fetchCars() {
       try {
-        const response = await api.get("/cars");
-        setCars(response.data);
+        const response = await api.get('/cars');
+        if (isMounted) {
+          setCars(response.data);
+        }
       } catch (error) {
         console.log(error);
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     }
     fetchCars();
-  }, []);
+    return () => {
+      isMounted = false;
+    };
+  },[]);
 
   useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", () => {
