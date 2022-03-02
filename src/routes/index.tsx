@@ -17,6 +17,7 @@ export type RootStackParamList = {
   SchedulingDetails: {} | undefined;
   Confirmation:{} | undefined;
   MyCars: undefined;
+  Profile: undefined;
 };
 
 
