@@ -2,7 +2,7 @@ import React from 'react';
 import { RectButtonProps } from 'react-native-gesture-handler';
 
 import { getAccessoryIcon } from '../../utils/getAccessoryIcon';
-// import { Car as ModelCar } from '../../database/model/Car';
+import { Car as ModelCar } from '../../database/model/Car';
 
 import {
   Container,
@@ -17,21 +17,11 @@ import {
   CarImage
 } from './styles';
 
-import { CarDTO } from '../../dtos/CarDTO';
 
-interface CarData{
-    brand: string,
-    name: string,
-    period: string,
-    thumbnail: string,
-    price: string,
-    fuel_type: string,
-}
 interface Props extends RectButtonProps{
 //   data: ModelCar;
-  data: CarDTO;
+  data: ModelCar;
 }
-
 
 
 

@@ -23,7 +23,7 @@ interface AuthContextData {
   signIn: (credentials: SignInCredentials) => Promise<void>;
   signOut: () => Promise<void>;
   updatedUser: (user: User) => Promise<void>;
-  // loading: boolean;
+  loading: boolean;
 }
 
 interface AuthProviderProps {
@@ -34,6 +34,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 function AuthProvider({ children } : AuthProviderProps) {
   const [data, setData] = useState<User>({} as User);
+  const [loading, setLoading] = useState(true);
 
   async function signIn({ email, password } : SignInCredentials) {
    
@@ -62,6 +63,7 @@ function AuthProvider({ children } : AuthProviderProps) {
       })
 
       setData({ token, ...user })
+     
     } catch (error) {
       throw new Error(error as string)
     }
@@ -105,12 +107,17 @@ function AuthProvider({ children } : AuthProviderProps) {
     async function loadUserData() {
       const userCollection = database.get<ModelUser>('users');
       const response = await userCollection.query().fetch();
+      
       if (response.length > 0) {
         const userData = response[0]._raw as unknown as User;
 
         const apiAxios: any = api;
         apiAxios.defaults.headers.Authorization  = `Bearer ${userData.token}`;
         setData(userData);
+        setLoading(false)
+      }
+      else{
+        setLoading(false)
       }
     }
     loadUserData()
@@ -122,7 +129,8 @@ function AuthProvider({ children } : AuthProviderProps) {
         user: data,
         signIn,
         signOut,
-        updatedUser
+        updatedUser,
+        loading
       }}
     >
       {children}

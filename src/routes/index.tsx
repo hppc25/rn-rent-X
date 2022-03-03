@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
+import { LoadAnimation } from '../components/LoadAnimation';
 import { useAuth } from '../hooks/auth';
 import { AppTabRoutes } from './app.tab.routes';
 import { AuthRoutes } from './auth.routes';
@@ -23,11 +24,12 @@ export type RootStackParamList = {
 
 
 export function Routes(){
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
   return (
+    loading ? <LoadAnimation /> :
     <NavigationContainer>
-      { user.id ? <AppTabRoutes /> : <AuthRoutes /> }
+      { (user && user.id) ? <AppTabRoutes /> : <AuthRoutes /> }
     </NavigationContainer>
   );
 }

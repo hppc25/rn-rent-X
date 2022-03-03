@@ -1,16 +1,16 @@
 import styled, {css} from 'styled-components/native';
 import { FlatList } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
-// import { Car } from '../../database/model/Car';
+import { Car } from '../../database/model/Car';
 
-interface Car{
-    brand: string,
-    name: string,
-    period: string,
-    thumbnail: string,
-    price: string,
-    fuel_type: string,
-}
+// interface Car{
+//     brand: string,
+//     name: string,
+//     period: string,
+//     thumbnail: string,
+//     price: string,
+//     fuel_type: string,
+// }
 
 export const Container = styled.View`
   flex: 1;

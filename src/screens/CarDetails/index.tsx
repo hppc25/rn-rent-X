@@ -15,6 +15,7 @@ import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
 
 import { CarDTO } from '../../dtos/CarDTO';
+import { Car as ModelCar } from '../../database/model/Car';
 
 
 import {Container, 
