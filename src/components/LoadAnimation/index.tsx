@@ -1,6 +1,7 @@
 import React from 'react';
+import { ActivityIndicator } from "react-native";
 
-import LottieView from 'lottie-react-native';
+// import LottieView from 'lottie-react-native';
 
 import loadingCar from '../../assets/loadingCar.json';
 
@@ -14,7 +15,9 @@ export function LoadAnimation(){
 
     <Container>
 
-      <LottieView 
+       <ActivityIndicator size="large" />
+
+      {/* <LottieView 
 
         source={loadingCar}
 
@@ -26,7 +29,7 @@ export function LoadAnimation(){
 
         loop
 
-      />
+      /> */}
 
 
     </Container>
