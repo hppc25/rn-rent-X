@@ -28,8 +28,10 @@ export function Home() {
 
   const netInfo = useNetInfo();
 
-  function handleCarDetails(car: CarDTO) {
-    navigation.navigate("CarDetails", { car: { ...car } });
+  function handleCarDetails(car: any) {
+  // function handleCarDetails(car: CarDTO) {
+    // navigation.navigate("CarDetails", { car: { ...car } });
+    navigation.navigate('CarDetails', { car })   
   }
 
 

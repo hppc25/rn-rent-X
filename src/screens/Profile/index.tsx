@@ -15,6 +15,8 @@ import {
   KeyboardAvoidingView, 
   TouchableWithoutFeedback 
 } from 'react-native';
+import { useNetInfo } from '@react-native-community/netinfo';
+
 import * as ImagePicker from 'expo-image-picker';
 import * as Yup from 'yup';
 import * as S from './styles';
@@ -35,7 +37,8 @@ export function Profile({ navigation } : NextScreenProps){
   const [avatar, setAvatar] = useState(user.avatar);
   const [name, setName] = useState(user.name);
   const [driverLicense, setDriverLicense] = useState(user.driver_license);
-
+  
+  const netInfo = useNetInfo();
   const theme = useTheme();
 
   function handleBack() {
@@ -43,7 +46,11 @@ export function Profile({ navigation } : NextScreenProps){
   }
 
   function handleOptionChange(optionSelected: 'dataEdit' | 'passwordEdit') {
-    setOption(optionSelected);
+    if(netInfo.isConnected === false && optionSelected === 'passwordEdit'){
+      Alert.alert('Para mudar a senha, conecte-se a Internet');
+    }else{
+      setOption(optionSelected);
+    }
   }
 
   async function handleAvatarSelect() {

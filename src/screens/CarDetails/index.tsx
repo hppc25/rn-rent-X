@@ -8,11 +8,13 @@ import Animated, {
 } from 'react-native-reanimated';
 import { StatusBar, StyleSheet } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 
 import { Accessory } from '../../components/Accessory';
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
+import api from "../../services/api";
 
 import { CarDTO } from '../../dtos/CarDTO';
 import { Car as ModelCar } from '../../database/model/Car';
@@ -47,7 +49,7 @@ type NextScreenNavigationProp = StackNavigationProp<
 
 type NextScreenProps = {
   navigation: NextScreenNavigationProp;
-  route: {params: {car: CarDTO}}
+  route: {params: {car: ModelCar}}
 }
 
 interface ImgProps {
@@ -61,6 +63,9 @@ export function CarDetails({ navigation, route:{params: {car}}}: NextScreenProps
 
   // const route: RouteProp<{params: {car: CarDTO}}, 'params'> = useRoute();
   // const [car, setCar] = useState<CarDTO>(route.params?.car);
+  const [carUpdate, setCarUpdate] = useState<CarDTO>({} as CarDTO);
+  const netInfo = useNetInfo();
+
   const theme = useTheme()
 
   const scrollY = useSharedValue(0);
@@ -91,7 +96,7 @@ export function CarDetails({ navigation, route:{params: {car}}}: NextScreenProps
   });
 
   function handleScheduling() {
-    navigation.navigate('Scheduling', {car})
+    navigation.navigate('Scheduling', {car: carUpdate })
   };
 
   function handleBack() {
@@ -99,15 +104,16 @@ export function CarDetails({ navigation, route:{params: {car}}}: NextScreenProps
   };
 
 
-  // const [photos, setPhotos] = useState<ImgProps[]>([]);
-  
-  // useEffect(() => {
-  //   let list:ImgProps[] = new Array();
+  useEffect(() => {
+    async function fetchOnlineData() {
+      const response = await api.get(`cars/${car.id}`);
+      setCarUpdate(response.data);
+    }
 
-  //   // car.photos.map( item=> list.push({'id': item, 'photo': item}))
-  //   setPhotos([...list])
-    
-  // },[])
+    if(netInfo.isConnected === true){
+      fetchOnlineData();
+    }
+  },[netInfo.isConnected])
 
 
   return (
@@ -132,7 +138,10 @@ export function CarDetails({ navigation, route:{params: {car}}}: NextScreenProps
         <Animated.View style={sliderCarsStyleAnimation}>
           <CarImages>
             <ImageSlider 
-              imagesUrl={car.photos}
+              imagesUrl={
+                !!carUpdate.photos ? 
+                carUpdate.photos : [{ id: car.thumbnail, photo: car.thumbnail }]
+              } 
             />
           </CarImages>
         </Animated.View>
@@ -155,23 +164,25 @@ export function CarDetails({ navigation, route:{params: {car}}}: NextScreenProps
 
           <Rent>
             <Period>{car.period}</Period>
-            <Price>{car.price}£</Price>
+            {/* <Price>{car.price}£</Price> */}
+            <Price>{netInfo.isConnected === true ? car.price+'£' : '...'}</Price>
           </Rent>
         </Details>
 
-        <Accessories>
+        {
+          carUpdate.accessories &&
+          <Accessories>
             {
-              car.accessories.map( ({type, name}) => (
-                <Accessory
-                  key={type} 
-                  name={name}
-                  icon={getAccessoryIcon(type)}
-                  />
-              ) )
+              carUpdate.accessories.map(accessory => (
+                <Accessory 
+                  key={accessory.type}
+                  name={accessory.name}
+                  icon={getAccessoryIcon(accessory.type)}
+                />
+              ))
             }
-          
-          
-        </Accessories>
+          </Accessories>
+        }
 
         <About>
           {car.about}
@@ -182,7 +193,14 @@ export function CarDetails({ navigation, route:{params: {car}}}: NextScreenProps
         <Button 
           title="Escolher período do aluguel "
           onPress={handleScheduling}
+          enabled={netInfo.isConnected === true}
         />
+        {
+          netInfo.isConnected === false &&
+          <OfflineInfo>
+          Conecte-se a internet para ver mais detalhes e agendar seu carro.
+          </OfflineInfo>
+        }
       </Footer>
     </Container>
   )
