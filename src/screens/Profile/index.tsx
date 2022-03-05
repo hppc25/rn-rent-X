@@ -164,7 +164,7 @@ export function Profile({ navigation } : NextScreenProps){
                 onPress={() => handleOptionChange('passwordEdit')}
               >
                 <S.OptionTitle active={option === 'passwordEdit'}>
-                  Trocar senha
+                  Palavra-passe
                 </S.OptionTitle>
               </S.Option>
             </S.Options>

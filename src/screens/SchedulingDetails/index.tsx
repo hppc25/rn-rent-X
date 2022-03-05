@@ -110,7 +110,7 @@ export function SchedulingDetails({ navigation, route }: NextScreenProps){
     .then(() => navigation.navigate('Confirmation', {
       nextScreenRoute: 'Home',
       title: 'Carro alugado!',
-      message: `Agora você só precisa ir\naté a concessionária da RENTX\npegar o seu automóvel.`
+      message: `Agora só precisa ir\naté a concessionária da RENTX\npegar o seu automóvel.`
     }))
     .catch((error) => {
       console.log("ERRO DO ALUGUEL =>", error)

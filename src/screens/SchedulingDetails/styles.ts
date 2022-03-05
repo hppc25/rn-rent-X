@@ -193,6 +193,6 @@ export const Footer = styled.View`
   ${({ theme }) => css`
     width: 100%;
     background-color: ${theme.colors.background_secondary};
-    padding: 24px 24px ${getBottomSpace() + 24}px;
+    padding: 24px 24px ${getBottomSpace() + 6}px;
   `}
 `;
