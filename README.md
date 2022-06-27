@@ -18,7 +18,7 @@
 RentX is a renting cars app, developed during the Rocketseat Ignite course. This project use Expo, TypeScript, Styled-Components, React Native Calendars, React Navigation, Axios, Yup, React Native Reanimated, Lottie for React Native and WatermelonDB to Offline First.
 
 <div align="center">
-    <img width="100%" src="docs/rentx.JPG" />
+    <img width="100%" src="docs/rentx.jpeg" />
 </div>
 
 ---
